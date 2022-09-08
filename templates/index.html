@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mission to Mars</title>
     <link
@@ -14,9 +14,9 @@
     <div class="container">
       <!-- Add Jumbotron to Header -->
       <div class="jumbotron text-center">
-        <h1>Mission to Mars</h1>
+        <h1><u><b>Mission to Mars</b></u></h1>
         <!-- Add a button to activate scraping script -->
-        <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
+        <p><a class="btn btn-default btn-lg bg-grey" href="/scrape" role="button">Scrape New Data</a></p>
       </div>
 
       <!-- Add section for Mars News -->
@@ -24,7 +24,7 @@
         <div class="col-md-12">
           <div class="media">
             <div class="media-body">
-              <h2>Latest Mars News</h2>
+              <h2><u>Latest Mars News</u></h2>
               <h4 class="media-heading">{{ mars.news_title }}</h4>
               <p>{{ mars.news_paragraph }}</p>
             </div>
@@ -35,7 +35,7 @@
       <!-- Section for Featured Image and Facts table -->
       <div class="row" id="mars-featured-image">
         <div class="col-md-8">
-          <h2>Featured Mars Image</h2>
+          <h2><u>Featured Mars Image</u></h2>
 
           <!-- if images is False/None/non-existent, then default to error message -->
           <img
@@ -48,11 +48,29 @@
         <div class="col-md-4">
           <!-- Mars Facts -->
           <div class="row" id="mars-facts">
-            <h4>Mars Facts</h4>
+            <h2><u>Mars Facts</u></h2>
             {{ mars.facts | safe }}
           </div>
         </div>
       </div>
+      
+      <!-- Section for Mars Hemispheres -->
+      <div class="row" id="mars-hemispheres">
+        <div class="page-header">
+          <h2><u>Mars Hemispheres</u></h2>
+        </div>
+      
+        {% for hemisphere in mars.hemispheres %}
+        <div class="col-xd-6">
+          <div class="thumbnail">
+            <img src="{{hemisphere.img_url | default('static/images/error.png', true)}}" alt="...">
+            <div class="caption">
+            <h3>{{hemisphere.title}}</h3>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
-  </body>
+  </div>
+</body>
 </html>
