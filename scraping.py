@@ -20,11 +20,11 @@ def scrape_all():
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
         "last_modified": dt.datetime.now(),
-        "mars_hemispheres": hemisphere_urls(browser)
+        "hemispheres": hemisphere_urls(browser)
     }
 
     # Stop webdriver and return data
-    browser.quit()
+    #browser.quit()
     return data
 
 
@@ -102,7 +102,7 @@ def mars_facts():
 
 def hemisphere_urls(browser):
     #visit the URL
-    url = 'https://marshemispheres.com/'
+    url = 'https://marshemispheres.com'
     browser.visit(url)
 
     #Create a list for images & titles
@@ -116,17 +116,22 @@ def hemisphere_urls(browser):
         html = browser.html
         hemisphere_soup = soup(html, "html.parser")
 
-        hemisphere['img_url'] = hemisphere_soup.find("a", text="Sample").get("href")
+        img_path = hemisphere_soup.find("a", text="Sample").get("href")
+        img_url = f"{url}/{img_path}"
+
+        hemisphere['img_url'] = img_url
         hemisphere['title'] = hemisphere_soup.find("h2", class_="title").get_text()
 
         hemisphere_image_urls.append(hemisphere)
 
         browser.back()
         
-        hemisphere_image_urls
+    print("\n======= hemisphere_image_urls ==========")   
+    print(hemisphere_image_urls)  
+    print("====================\n") 
 
     # 4. Print the list that holds the dictionary of each image url and title.
-    hemisphere_image_urls
+    return hemisphere_image_urls
 
     # 5. Quit the browser
     browser.quit()
